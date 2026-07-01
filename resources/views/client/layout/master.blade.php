@@ -195,7 +195,7 @@
             </li>
           @empty
             <li class="list-group-item text-center py-4 text-muted">
-              سبد خرید شما خالی است 🐾
+              سبد خرید شما خالی است 
             </li>
           @endforelse
     
