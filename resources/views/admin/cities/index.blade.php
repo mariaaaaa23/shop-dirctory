@@ -31,10 +31,10 @@
                     <td>{{ $city->state->name}}</td>
                     <td>{{ $city->slug }}</td>
                     <td>
-                        <a href="{{ route('cities.edit',$city) }}" class="btn btn-sm btn-primary">ویرایش</a>
+                        <a href="{{ route('admin.cities.edit',$city) }}" class="btn btn-sm btn-primary">ویرایش</a>
                     </td>
                     <td>
-                        <form action="{{ route('cities.destroy', $city) }}" method="post">
+                        <form action="{{ route('admin.cities.destroy', $city) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <input type="submit" class="btn btn-danger btn-sm" value="حذف">

@@ -12,7 +12,7 @@
           <!-- /.card-header -->
           <div class="card-body">
 
-            <form action="{{ route('categories.store') }}" method="post">
+            <form action="{{ route('admin.categories.store') }}" method="post">
                 @csrf
                 
                 <div class="form-group">
@@ -24,6 +24,22 @@
                         @endforeach
                     </select>
                 </div>
+
+
+
+                {{--  چک باکس برای انتخاب ویژگی ها --}}
+                <div class="form-group">
+                    <label>انتخاب گروه ویژگی ها</label>
+                    <div class="row">
+                        @foreach ($properties as $property)
+                            <lable class="col-sm-2">
+                                <input  type="checkbox" name="properties[]" value="{{ $property->id }}">{{ $property->title }}
+                            </lable>
+                        @endforeach
+                    </div>
+                </div>
+
+
 
                 <div class="form-group">
                     <label for="title">عنوان</label>

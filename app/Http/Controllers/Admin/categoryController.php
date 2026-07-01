@@ -3,12 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\Admin\CategoryRequest;
 use App\Models\Category;
+use App\Models\PropertyGroup;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Http\Request;
 
-class categoryController extends Controller
+
+class CategoryController extends Controller
 {
+    public static function middleware(): array
+    {
+        return[
+            new Middleware('permission:manage categories', only:['index','create','store','edit','update','destroy']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -25,7 +35,8 @@ class categoryController extends Controller
     public function create()
     {
         return view('admin.categories.create', [
-            'categories'=>Category::all()
+            'categories'=>Category::all(),
+            'properties' => PropertyGroup::all()
         ]);
     }
 
@@ -40,7 +51,10 @@ class categoryController extends Controller
             'slug'=>$request->get('slug')
         ]);
 
-        return redirect(route('categories.index'));
+        // هر گروه ویژگی که برای دسته بندی تیک زدیم ذخیره میکنه در دیتابیس
+        $category->propertyGroups()->attach($request->get('properties'));
+
+        return redirect(route('admin.categories.index'));
     }
 
     /**
@@ -58,7 +72,8 @@ class categoryController extends Controller
     {
         return view('admin.categories.edit',[
             'category'=>$category,
-            'categories'=>Category::all()
+            'categories'=>Category::all(),
+            'properties' => PropertyGroup::all()
         ]);
     }
 
@@ -72,8 +87,10 @@ class categoryController extends Controller
             'title'=>$request->get('title'),
             'slug'=>$request->get('slug')
         ]);
+        // هرگروه ویژگی که تیکش بزنیم موقع ویرایش نمایش میده هر کدوم تیکش برداریم حذف میکنه
+        $category->propertyGroups()->sync($request->get('properties'));
 
-        return redirect(route('categories.index'));
+        return redirect(route('admin.categories.index'));
     }
 
     /**
@@ -81,8 +98,11 @@ class categoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        // وقتی دسته بندی حذف میکینیم گروه ویژگی ها هم باید حذف بشن
+        $category->propertyGroups()->detach();
+        
         $category->delete();
 
-        return redirect(route('categories.index'));
+        return redirect(route('admin.categories.index'));
     }
 }

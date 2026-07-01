@@ -3,15 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\NewCityRequest;
-use App\Http\Requests\UpdateCityRequest;
+use App\Http\Requests\Admin\NewCityRequest;
+use App\Http\Requests\Admin\UpdateCityRequest;
+use App\Http\Requests\UpdateCityRequest as RequestsUpdateCityRequest;
 use App\Models\City;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class CityController extends Controller
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:manage cities', only:['index','create','store','edit','update','destroy']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -49,7 +58,7 @@ class CityController extends Controller
             Str::slug($request->name, '-', null),
         ]);
 
-        return redirect(route('cities.index'));
+        return redirect(route('admin.cities.index'));
     }
 
     /**
@@ -85,7 +94,7 @@ class CityController extends Controller
             Str::slug($request->name)
         ]);
 
-        return redirect(route('cities.index'));
+        return redirect(route('admin.cities.index'));
     }
 
     /**
@@ -95,6 +104,6 @@ class CityController extends Controller
     {
         $city->delete();
 
-        return redirect(route('cities.index'));
+        return redirect(route('admin.cities.index'));
     }
 }

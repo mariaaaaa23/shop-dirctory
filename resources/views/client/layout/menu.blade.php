@@ -30,6 +30,32 @@
     </ul>
 </div>
 
+
+
+<ul class="main-nav">
+    <li class="nav-item-dropdown">
+        <a href="javascript:void(0)" class="nav-btn">
+            <span>برند ها</span>
+            <i class="arrow-down"></i>
+        </a>
+        
+        <ul class="dropdown-content">
+            @foreach ($brands as $brand)
+                <li class="has-submenu">
+                    <a href="#" class="dropdown-link">
+                        <img src="{{ asset('storage/' . $brand->image) }}" alt="{{ $brand->name }}" title="{{ $brand->name }}" style="width: 70px; height: 30px; margin-right: 5px;">
+                        {{ $brand->name }}
+                        <span class="caret-right"></span>
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </li>
+</ul>
+</div>
+
+
+
 <style>
     /* ظرف اصلی */
     .custom-menu-wrapper {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class DiscountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,7 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id'=>['nullable','exists:categories,id'],
-            'title'=>['required','unique:categories,title'],
-            'slug'=>['required','unique:categories,slug','alpha_dash']
+            'value' => ['required','lt:100','gt:0']
         ];
     }
 }

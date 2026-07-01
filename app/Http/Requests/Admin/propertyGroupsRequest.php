@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateCityRequest extends FormRequest
+class propertyGroupsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +22,7 @@ class UpdateCityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>['required'],
-            'slug'=>['required',Rule::unique('cities','slug')->ignore($this->city)],
-            'state_id'=>['required','exists:states,id']
+            'title' => ['required','unique:property_groups,title'],
         ];
     }
 }

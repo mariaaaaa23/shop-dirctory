@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 class User extends Authenticatable
 {
@@ -20,9 +23,9 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'phone',
         'password',
+        'status'
     ];
 
     /**
@@ -46,5 +49,27 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function likes()
+    {
+        return $this->belongsToMany(Product::class, 'likes')->withTimestamps();
+    }
+
+    //لایک محصول
+    public function like(Product $product)
+    {
+        //لایک شدن محصول توسط کاربر
+        return $this->likes()->toggle($product->id);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
     }
 }

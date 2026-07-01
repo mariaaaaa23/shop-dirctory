@@ -7,12 +7,12 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title"> ایجاد شهر   </h3>
+            <h3 class="card-title"> ویرایش شهر  </h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
 
-            <form action="{{ route('cities.update', $city) }}" method="post">
+            <form action="{{ route('admin.cities.update', $city) }}" method="post">
                 @csrf
                 @method('PATCH')
                 <div class="form-group">

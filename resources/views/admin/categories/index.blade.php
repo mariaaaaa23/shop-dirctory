@@ -31,10 +31,10 @@
                     <td>{{ $category->slug }}</td>
                     <td>{{ optional($category->parent)->title }}</td>
                     <td>
-                        <a href="{{ route('categories.edit',$category) }}" class="btn btn-sm btn-primary">ویرایش</a>
+                        <a href="{{ route('admin.categories.edit',$category) }}" class="btn btn-sm btn-primary">ویرایش</a>
                     </td>
                     <td>
-                        <form action="{{ route('categories.destroy', $category) }}" method="post">
+                        <form action="{{ route('admin.categories.destroy', $category) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <input type="submit" class="btn btn-danger btn-sm" value="حذف">
