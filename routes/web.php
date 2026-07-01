@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
 
 Route::prefix('')->name('client.')->group(function(){
     Route::get('/', [HomeController::class,'index'])->name('index');
@@ -80,6 +81,9 @@ Route::prefix('')->name('client.')->group(function(){
     Route::get('/get-cities/{province_id}', [HomeController::class, 'getCities'])->name('getCities');
     //روت ذخیره استان و شهر انتخاب شده در سشن
     Route::post('/set-active-city', [HomeController::class, 'setActiveCity'])->name('setActiveCity');
+
+    //این مسیر برای اینکه هر دسته محصولات همونو نمایش بده
+    Route::get('/shop/{type}/{id}', [ClientProductController::class, 'filterProducts'])->name('shop.filter');
 });
 
 

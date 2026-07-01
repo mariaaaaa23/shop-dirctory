@@ -9,7 +9,7 @@
             <ul class="dropdown-content">
                 @foreach ($categories->whereNull('category_id') as $parent)
                     <li class="has-submenu">
-                        <a href="#" class="dropdown-link">
+                        <a href="{{ route('client.shop.filter', ['type' => 'category', 'id' => $parent->id]) }}" class="dropdown-link">
                             {{ $parent->title }}
                             @if($parent->children->count() > 0)
                                 <span class="chevron-left">‹</span>
@@ -19,7 +19,7 @@
                         @if($parent->children->count() > 0)
                             <ul class="submenu-right">
                                 @foreach ($parent->children as $child)
-                                    <li><a href="#" class="submenu-link">{{ $child->title }}</a></li>
+                                    <li><a href="{{ route('client.shop.filter', ['type' => 'category', 'id' => $child->id]) }}" class="submenu-link">{{ $child->title }}</a></li>
                                 @endforeach
                             </ul>
                         @endif
@@ -42,7 +42,7 @@
         <ul class="dropdown-content">
             @foreach ($brands as $brand)
                 <li class="has-submenu">
-                    <a href="#" class="dropdown-link">
+                    <a href="{{ route('client.shop.filter', ['type' => 'brand', 'id' => $brand->id]) }}" class="dropdown-link">
                         <img src="{{ asset('storage/' . $brand->image) }}" alt="{{ $brand->name }}" title="{{ $brand->name }}" style="width: 70px; height: 30px; margin-right: 5px;">
                         {{ $brand->name }}
                         <span class="caret-right"></span>

@@ -66,8 +66,8 @@
     <div class="row my-5">
       @foreach ($brands as $brand )
       <div class="col text-center">
-        <a href="#" class="categories-item">
-          <div class="item"><a href="#"><img src="{{asset('storage/' . $brand->image)  }}" alt="{{ $brand->name }}" style="height: 200px; width: 200px; width: 100%;" ></a> </div>
+        <a href="{{ route('client.shop.filter', ['type' => 'brand', 'id' => $brand->id]) }}" class="categories-item">
+          <div class="item"><a href="{{ route('client.shop.filter', ['type' => 'brand', 'id' => $brand->id]) }}"><img src="{{asset('storage/' . $brand->image)  }}" alt="{{ $brand->name }}" style="height: 200px; width: 200px; width: 100%;" ></a> </div>
           <h5>{{ $brand->name }}</h5>
         </a>
       </div>
