@@ -388,6 +388,16 @@
                         <p>لیست</p>
                       </a>
                     </li>
+                    <li class="nav-item">
+                      <a href="{{ route('admin.reports.index') }}" class="nav-link">
+                        <i class="fa fa-circle-o nav-icon"></i>
+                        <p>گزارش</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                    </li>
+                  </ul>
+                </li>
                 
 
 

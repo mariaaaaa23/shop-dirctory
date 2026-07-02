@@ -42,7 +42,7 @@ class HomeController extends Controller
 
     public function getCities($province_id)
     {
-        $cities = city::where('state_id', $province_id)->get();
+        $cities = City::where('state_id', $province_id)->get();
         return response()->json($cities);
     }
 

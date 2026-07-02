@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProductPictureController;
 use App\Http\Controllers\Admin\ProductPropertyController;
 use App\Http\Controllers\Admin\PropertyController;
 use App\Http\Controllers\Admin\PropertyGroupController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CommentController as AdminCommentController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\Client\ProductController as ClientProductController;
 use App\Http\Controllers\Client\LoginController;
 use App\Http\Controllers\Client\RegisterController;
 use App\Http\Controllers\Client\CommentController as ClientCommentController;
+use App\Http\Controllers\Client\ReportConroller as ClientReportController;
 use App\Http\Controllers\Client\LikeController;
 use App\Http\Controllers\Author\ProductController as AuthorProductController;
 use App\Http\Controllers\Client\CartController;
@@ -78,12 +80,12 @@ Route::prefix('')->name('client.')->group(function(){
     //روت ارسال درخواست نویسندگی توسط کاربر
     Route::post('/request-author', [UserController::class, 'requestAuthor'])->name('request.author')->middleware('auth');
 
-    Route::get('/get-cities/{province_id}', [HomeController::class, 'getCities'])->name('getCities');
-    //روت ذخیره استان و شهر انتخاب شده در سشن
-    Route::post('/set-active-city', [HomeController::class, 'setActiveCity'])->name('setActiveCity');
+    
 
     //این مسیر برای اینکه هر دسته محصولات همونو نمایش بده
     Route::get('/shop/{type}/{id}', [ClientProductController::class, 'filterProducts'])->name('shop.filter');
+
+    Route::post('/products/{id}/report', [ClientReportController::class, 'storeReport'])->name('products.report')->middleware('auth');
 });
 
 
@@ -131,6 +133,14 @@ Route::prefix('/adminpanel')->name('admin.')->middleware(CheckPermission::class 
 
     Route::resource('products.discounts', DiscountController::class);
 
+    //روت دیدن آگهی های نویسنده
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::patch('/reports/{id}/seen', [ReportController::class, 'markAsSeen'])->name('reports.seen');
+    //روت حذف آگهی کاربر
+    Route::delete('/products/{id}', [ReportController::class, 'destroyPost'])->name('products.destroy');
+    //روت دکمه مسدود کردن کاربر
+    Route::patch('/users/{id}/block', [ReportController::class, 'blockUser'])->name('users.block');
+
 
 
     Route::resource('property_groups', PropertyGroupController::class);
@@ -155,6 +165,10 @@ Route::prefix('/adminpanel')->name('admin.')->middleware(CheckPermission::class 
 Route::middleware([CheckPermission::class])->prefix('author')->name('author.')->group(function(){
 
     Route::resource('products', AuthorProductController::class);
+
+    Route::get('/get-cities/{province_id}', [HomeController::class, 'getCities'])->name('getCities');
+    //روت ذخیره استان و شهر انتخاب شده در سشن
+    Route::post('/set-active-city', [HomeController::class, 'setActiveCity'])->name('setActiveCity');
 
 });
 

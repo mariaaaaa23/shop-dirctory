@@ -51,6 +51,20 @@
                         <span class="text-dark small ms-2">(۵.۰)</span>
                     </div>
 
+                    @auth
+                    <div class="mt-3">
+                        <button type="button" class="btn btn-sm btn-outline-danger w-100 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#reportModal">
+                             گزارش تخلف این آگهی
+                        </button>
+                    </div>
+                @else
+                    <div class="mt-3">
+                        <a href="{{ route('client.register.store') }}" class="btn btn-sm btn-outline-secondary w-100 py-2 fw-bold">
+                            برای ثبت گزارش ابتدا وارد شوید
+                        </a>
+                    </div>
+                @endauth
+
                     <div id="price-display-box" class="price-container p-3 bg-light rounded-3 d-inline-block mb-4 border border-light-subtle">
                         
                     @if($product->has_discount)
@@ -462,3 +476,44 @@
         }
     });
 </script>
+
+<!-- Report Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true" dir="rtl">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold text-dark" id="reportModalLabel">گزارش تخلف آگهی</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('client.products.report', $product->id) }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <p class="text-muted small">لطفاً علت گزارش خود را انتخاب کنید تا ادمین‌ها سریع‌تر بررسی کنند.</p>
+                    
+                    <!-- انتخاب علت تخلف -->
+                    <div class="mb-3" dir="rtl">
+                        <label for="reason" class="form-label fw-bold small">علت گزارش <span class="text-danger">*</span></label>
+                        <select class="form-select" name="reason" id="reason" required>
+                            <option value="">-- انتخاب کنید --</option>
+                            <option value="اطلاعات نادرست یا فیک">اطلاعات نادرست یا فیک</option>
+                            <option value="قیمت نامناسب یا نامتعارف">قیمت نامناسب یا نامتعارف</option>
+                            <option value="کلاهبرداری یا موارد مشکوک">کلاهبرداری یا موارد مشکوک</option>
+                            <option value="محتوای نامناسب یا غیراخلاقی">محتوای نامناسب یا غیراخلاقی</option>
+                            <option value="آگهی تکراری">آگهی تکراری</option>
+                        </select>
+                    </div>
+
+                    <!-- توضیحات تکمیلی -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label fw-bold small">توضیحات تکمیلی (اختیاری)</label>
+                        <textarea class="form-textarea form-control" name="description" id="description" rows="4" placeholder="جزئیات بیشتری که فکر می‌کنید ادمین باید بداند را بنویسید..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">انصراف</button>
+                    <button type="submit" class="btn btn-danger">ثبت و ارسال گزارش</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
