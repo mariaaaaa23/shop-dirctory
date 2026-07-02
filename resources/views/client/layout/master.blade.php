@@ -816,9 +816,7 @@ function loadCitiesWithSelected(provinceId, selectedCityId) {
           }
       });
       
-      // =========================================================================
-      // ۱. توابع مربوط به بخش هدر صفحه (Header Dropdowns)
-      // =========================================================================
+      // . توابع مربوط به بخش هدر صفحه (Header Dropdowns)
       
       // تابع لود کردن شهرهای هدر بعد از انتخاب استان
       function loadCities(provinceId) {
@@ -857,9 +855,7 @@ function loadCitiesWithSelected(provinceId, selectedCityId) {
       }
       
       
-      // =========================================================================
-      // ۲. توابع مربوط به داخل مدال (Modal Dropdowns)
-      // =========================================================================
+      //  توابع مربوط به داخل مدال (Modal Dropdowns)
       
       // تابع لود کردن شهرهای داخل مدال بعد از انتخاب استان
       function loadModalCities(provinceId) {
@@ -915,12 +911,11 @@ function loadCitiesWithSelected(provinceId, selectedCityId) {
       }
       
       
-      // =========================================================================
-// ۳. تابع اصلی و مشترک ذخیره سشن و هدایت به صفحه اختصاصی شهر (Redirect)
-// =========================================================================
+
+// . تابع اصلی و مشترک ذخیره سشن و هدایت به صفحه اختصاصی شهر (Redirect)
 function saveCitySession(cityId, provinceId) {
     $.ajax({
-        url: '{{ route("client.setActiveCity") }}', // ارسال درخواست به متد ذخیره سشن
+        url: '{{ route("author.setActiveCity") }}', // ارسال درخواست به متد ذخیره سشن
         type: 'POST',
         data: {
             _token: '{{ csrf_token() }}',
