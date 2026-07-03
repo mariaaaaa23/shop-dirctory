@@ -26,6 +26,10 @@
                             <th scope="col">موقعیت</th>
                             <th scope="col">قیمت (تومان)</th>
                             <th scope="col">وضعیت آگهی</th> 
+                            <th scope="col">مدیریت آگهی</th> 
+                            <th scope="col">تنوع</th> 
+                            <th scope="col">کامنت ها</th>
+                            <th scope="col">تخفیف</th>
                             <th scope="col" style="width: 250px;">عملیات</th>
                         </tr>
                     </thead>
@@ -57,14 +61,55 @@
                                 </td>
 
                                 <td>
-                                    @if($product->status == 'pending')
-                                        <span class="badge bg-warning text-dark px-2 py-1.5" style="font-size: 0.85rem;"> در حال بررسی</span>
-                                    @elseif($product->status == 'approved')
-                                        <span class="badge bg-dark px-2 py-1.5" style="font-size: 0.85rem;"> منتشر شده</span>
+                                    {{-- دکمه گالری تصاویر --}}
+                                    <a href="{{ route('author.products.gallery.index', $product->id) }}" class="btn btn-sm btn-warning" title="گالری تصاویر">
+                                        <i class="fa fa-images"></i> گالری
+                                    </a>
+                                
+                                    {{-- دکمه ویژگی‌ها --}}
+                                    <a href="{{ route('author.products.properties.index', $product->id) }}" class="btn btn-sm btn-info" title="ویژگی‌های آگهی">
+                                        <i class="fa fa-list"></i> ویژگی‌ها
+                                    </a>
+                                </td>
+
+                                
+
+                                <td class="text-center">
+                                    @if($product->status == 'approved')
+                                        <span class="badge bg-success text-dark px-2 py-1">تایید شده</span>
+                                    @elseif($product->status == 'pending')
+                                        <span class="badge bg-warning text-dark px-2 py-1">در انتظار تایید</span>
                                     @elseif($product->status == 'rejected')
-                                        <span class="badge bg-dark px-2 py-1.5" style="font-size: 0.85rem;"> رد شده</span>
+                                        <span class="badge bg-danger text-red px-2 py-1">رد شده</span>
                                     @endif
                                 </td>
+
+                                <td>
+                                    {{-- دکمه تنوع رنگ و قیمت در لیست آگهی‌های نویسنده --}}
+                                  <a href="{{ route('author.products.variations.store', $product->id) }}" class="btn btn-sm btn-info" title="تنوع قیمت و رنگ">
+                                        <i class="fa fa-palette"></i> تنوع‌ها
+                                  </a>
+                               </td>
+
+                               <td>
+                                <a href="{{ route('author.comments.index', $product->id) }}" class="btn btn-sm btn-warning">کامنت ها</a>
+                              </td>
+
+                              <td>
+                                @if($product->discount)
+                                <p class="text-success font-bold">{{ $product->discount->value }}٪ تخفیف</p>
+                            
+                                <form action="{{ route('author.products.discounts.destroy', ['product' => $product, 'discount' => $product->discount]) }}" method="post" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" class="btn btn-sm btn-danger" value="حذف">
+                                </form>
+                            @else
+                                <a href="{{ route('author.products.discounts.create', $product) }}" class="btn btn-sm btn-success">
+                                    ایجاد تخفیف
+                                </a>
+                            @endif
+                              </td>
 
                                 <td>
                                     @if($product->status == 'approved')
