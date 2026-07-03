@@ -184,7 +184,7 @@ Route::middleware([CheckPermission::class])->prefix('author')->name('author.')->
     Route::resource('products.discounts', AuthorDiscountController::class)->only(['create','store','destroy']);
 
 
-    Route::get('/get-cities/{province_id}', [HomeController::class, 'getCities'])->name('getCities');
+    
     //روت ذخیره استان و شهر انتخاب شده در سشن
     Route::post('/set-active-city', [HomeController::class, 'setActiveCity'])->name('setActiveCity');
 
@@ -198,5 +198,7 @@ Route::get('/api/states/{state_id}/cities', function($state_id) {
 
 //روت اختصاصس برای نمایش محصولات بر اساس اسلاگ شهر
 Route::get('/city/{slug}', [HomeController::class, 'cityProducts'])->name('city.products');
+
+Route::get('/get-cities/{province_id}', [HomeController::class, 'getCities'])->name('getCities');
 
 
