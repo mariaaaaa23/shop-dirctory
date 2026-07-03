@@ -27,6 +27,11 @@ use App\Http\Controllers\Client\CommentController as ClientCommentController;
 use App\Http\Controllers\Client\ReportConroller as ClientReportController;
 use App\Http\Controllers\Client\LikeController;
 use App\Http\Controllers\Author\ProductController as AuthorProductController;
+use App\Http\Controllers\Author\ProductPropertyController as AuthorProductPropertyController;
+use App\Http\Controllers\Author\ProductVariationController as AuthorProductVariationController;
+use App\Http\Controllers\Author\CommentController as AuthorCommentController;
+use App\Http\Controllers\Author\DiscountController as AuthorDiscountController;
+use App\Http\Controllers\Author\ProductGalleryController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\checkoutController;
 use App\Http\Middleware\CheckPermission;
@@ -165,6 +170,19 @@ Route::prefix('/adminpanel')->name('admin.')->middleware(CheckPermission::class 
 Route::middleware([CheckPermission::class])->prefix('author')->name('author.')->group(function(){
 
     Route::resource('products', AuthorProductController::class);
+
+    Route::resource('products.gallery', ProductGalleryController::class)->only(['index','store','destroy']);
+
+    Route::resource('products.properties', AuthorProductPropertyController::class)->only(['index','store']);
+
+    Route::resource('products.variations', AuthorProductVariationController::class)->only(['index','store']);
+    Route::delete('/variations/{variation}', [AuthorProductVariationController::class, 'destroy'])->name('variations.destroy');
+
+    Route::get('/comments', [AuthorCommentController::class, 'index'])->name('comments.index');
+    Route::delete('/comments/{comment}', [AuthorCommentController::class, 'destroy'])->name('comments.destroy');
+
+    Route::resource('products.discounts', AuthorDiscountController::class)->only(['create','store','destroy']);
+
 
     Route::get('/get-cities/{province_id}', [HomeController::class, 'getCities'])->name('getCities');
     //روت ذخیره استان و شهر انتخاب شده در سشن
