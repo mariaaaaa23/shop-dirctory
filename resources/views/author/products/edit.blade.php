@@ -153,7 +153,7 @@ $(document).ready(function () {
         forceRefreshMenu(citySelect);
 
         $.ajax({
-            url: '/author/get-cities/' + provinceId, 
+            url: '/get-cities/' + provinceId, 
             type: 'GET',
             dataType: 'json',
             success: function (data) {
