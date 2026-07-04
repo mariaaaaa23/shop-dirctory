@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Shetabit\Multipay\Invoice;
 use Shetabit\Multipay\Exceptions\InvalidPaymentException;
 use App\Models\Coupon;
+use App\Models\ProductVariation;
 use Shetabit\Multipay\Payment as MultipayPayment;
 use Shetabit\Shoping\Facades\Payment; 
 use Shetabit\Multipay\Drivers\Zarinpal\Zarinpal;
@@ -122,6 +123,31 @@ public function verifyPayment(Request $request, $order_id)
             'status'        => 'paid',
             'tracking_code' => $receipt->getReferenceId()
         ]);
+
+        $cartItems = CartItem::where('user_id', auth()->id())->get();
+
+        foreach($cartItems as $item){
+
+            if($item->color_id){
+
+                //پیدا کردن سطر مربوط به تنوع محصول بر اساس آیدی محصول و آیدی رنگ
+                $variation = ProductVariation::find($item->color_id);
+                
+                if($variation){
+
+                    //کسر از موجودی رنگ مورد نظر
+                    $variation->stock = max(0, $variation->stock - $item->quantity);
+                    $variation->save();
+                }
+            }else{
+                //گرنه اگر محصول ساده بود و رنگ مداشت از موجودی کل محصول کم بشه
+                $product = $item->product;
+                if($product && isset($product->stock)){
+                    $product->stock = max(0, $product->stock - $item->quantity);
+                    $product->save();
+                }
+            }
+        }
 
         // پاک کردن آیتم‌های سبد خرید کاربر
         CartItem::where('user_id', auth()->id())->delete();
