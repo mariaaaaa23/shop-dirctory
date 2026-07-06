@@ -21,3 +21,8 @@
 1. کلون کردن مخزن:
    ```bash
    git clone [https://github.com/mariaaaaa23/shop-dirctory.git](https://github.com/mariaaaaa23/shop-dirctory.git)
+
+   
+## دیاگرام پایگاه داده (ERD)
+
+![Database Diagram](https://raw.githubusercontent.com/mariaaaaa23/shop-dirctory/907a63f32b97876833a56fc393179e3ce5b17354/Untitled.png)
