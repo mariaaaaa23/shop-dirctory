@@ -4,8 +4,7 @@ namespace App\Http\Requests\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-
-class RegisterRequest extends FormRequest
+class SmsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +22,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => ['required','digits:11','unique:users,phone'],
-            'password' => ['required','string','min:8'],
-            'sms_code' => ['required','digits:4']
+            'phone' => ['required','regex:/^09[0-9]{9}$/']
         ];
     }
 }
