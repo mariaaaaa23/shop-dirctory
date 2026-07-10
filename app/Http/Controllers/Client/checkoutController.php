@@ -13,10 +13,18 @@ use App\Models\ProductVariation;
 use Shetabit\Multipay\Payment as MultipayPayment;
 use Shetabit\Shoping\Facades\Payment; 
 use Shetabit\Multipay\Drivers\Zarinpal\Zarinpal;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 
 class checkoutController extends Controller
 {
+    public static function middleware()
+    {
+        return[
+            new Middleware('permission:manage own cartItems', only:['index']),
+        ];
+    }
     public function index()
     {
         //گرفتن آیتم های سبد خرید کاربر لاگین شده به همراه اطلاعات محصول

@@ -14,11 +14,11 @@ class DiscountController extends Controller
 {
 
     public static function middleware(): array
-        {
+    {
             return[
-                new Middleware('permission:manage discounts', only:['create','store','destroy'])
+                new Middleware('permission:manage own discounts', only:['create','store','destroy'])
             ];
-        }
+    }
     
     /**
      * Display a listing of the resource.

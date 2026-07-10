@@ -9,9 +9,17 @@ use App\Models\FeaturedCategory;
 use App\Models\featuredCategory as ModelsFeaturedCategory;
 use App\Models\PropertyGroup;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class FeaturedCategoryController extends Controller
 {
+    public static function middleware()
+    {
+        return[
+            new Middleware('permission:manage featuredCategories', only:['create']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */

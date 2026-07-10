@@ -6,9 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class CommentController extends Controller
 {
+    public static function middleware()
+    {
+        return[
+            new Middleware('permission:view comments', only:['index']),
+            new Middleware('permission:manage own comments', only:['destroy'])
+        ];
+    }
     public function index()
     {
         $authorId = auth()->id(); //گرفتن شناسه نویسنده لاگین شده

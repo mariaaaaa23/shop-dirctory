@@ -5,10 +5,18 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 
 class LikeController extends Controller
 {
+    public static function middleware()
+    {
+        return[
+            new Middleware('permission:likeProducts', only:['store','destroy']),
+        ];
+    }
     public function index()
     {
         if(!auth()->check()){

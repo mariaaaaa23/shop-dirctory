@@ -15,35 +15,37 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            // ایجاد پست مربوط به خود کاربر
-            'create posts',
-
-            // ویرایش پست فقط آگهی خود شخص
-            'edit own posts',
-            'delete own posts',
+            
+            'manage own comments',
+            'manage own discounts',
+            'manage own products',
+            'manage own productGalleries',
+            'manage own productProperties',
+            'manage own productVariations',
 
             // ویرایش همه آگهی ها مخصوص ادمین
-            'edit any posts',
-            'delete any posts',
             'manage categories',
             'manage cities',
             'manage roles',
             'manage users',
             'manage brands',
             'manag posts',
-            'manage discounts',
             'manage properties',
-            'manage propertyGroups',
-            'manage productproperties',
-            'manage pictures',
+            'manage coupons',
+            'manage featuredCategories',
+            'manage reports',
+            'manage sliders',
+            'manage own pictures',
             'view-dashboard',
             'create comments',
             'view posts',
-            'delete comments',
             'view comments',
             'login users',
             'register users',
-            'logout users'
+            'logout users',
+            'manage own cartItems',
+            'likeProducts',
+            'view home',
         ];
 
         

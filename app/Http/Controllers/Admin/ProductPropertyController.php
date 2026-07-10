@@ -15,7 +15,7 @@ class ProductPropertyController extends Controller
     public static function middleware()
     {
         return[
-            new Middleware('permission:manage productproperties', only:['index','create','store'])
+            new Middleware('permission:manage own productproperties', only:['index','create','store'])
         ];
     }
     /**

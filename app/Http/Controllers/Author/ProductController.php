@@ -10,9 +10,17 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Brand;
 use App\Models\State;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class ProductController extends Controller
 {
+    public static function middleware()
+    {
+        return[
+            new Middleware('permission:manage own posts', only:['create','store','edit','update','destroy'])
+        ];
+    }
     public function index()
     {
         $products = Product::where('user_id', auth()->id())

@@ -7,9 +7,18 @@ use App\Http\Requests\Admin\ProductVariationRequest;
 use App\Models\Product;
 use App\Models\ProductVariation;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class ProductVariationController extends Controller
 {
+    public static function middleware()
+    {
+        return[
+            new Middleware('permission:manage own productVariations', only:['index','store','destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

@@ -15,7 +15,7 @@ class CommentController extends Controller
     {
         return[
             new Middleware('permission:view comments', only:['index']),
-            new Middleware('permission:delete comments', only:['destroy'])
+            new Middleware('permission:manage own comments', only:['destroy'])
         ];
     }
     /**

@@ -5,9 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class OrderController extends Controller
 {
+
+    public static function middleware()
+    {
+        return[
+            new Middleware('permission:manage orders', only:['index','show']),
+        ];
+    }
+
     public function index()
     {
         //گرفتن همه سفارشات همراه با اطلاعات کاربر خریدار

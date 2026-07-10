@@ -8,9 +8,19 @@ use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use PHPUnit\Event\Application\Started;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class SliderController extends Controller
 {
+
+    public static function middleware()
+    {
+        return[
+            new Middleware('permission:manage sliders', only:['index','create','store','edit','update','destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

@@ -7,9 +7,19 @@ use App\Models\Product;
 use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class ReportController extends Controller
 {
+
+    public static function middleware()
+    {
+        return[
+            new Middleware('permission:manage reports', only:['index','destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

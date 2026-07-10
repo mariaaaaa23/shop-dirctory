@@ -5,9 +5,17 @@ namespace App\Http\Controllers\Author;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class ProductPropertyController extends Controller
 {
+    public static function middleware()
+    {
+        return[
+            new Middleware('permission:manage own productproperties', only:['index','create','store'])
+        ];
+    }
     public function index(Product $product)
     {
         if($product->user_id !== auth()->id()){
