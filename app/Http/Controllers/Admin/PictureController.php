@@ -18,7 +18,7 @@ class PictureController extends Controller
     public static function middleware()
     {
         return[
-            new Middleware('permission: manage pictures', only:['index','store','destroy'])
+            new Middleware('permission:manage pictures', only:['index','store','destroy'])
         ];
     }
     /**

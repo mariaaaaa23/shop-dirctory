@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         return [
             // اعمال پرمیشن‌ها به متدهای خاص
-            new Middleware('permission:manage users', only:['index','create','edit','update','destroy']),
+            new Middleware('permission:manage users', only:['index','destroy']),
         ];
     }
     /**

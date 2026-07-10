@@ -7,9 +7,17 @@ use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\ProductVariation;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class CartController extends Controller
 {
+    public static function middleware()
+    {
+        return[
+            new Middleware('permission:manage own cartItems', only:['store','destroy']),
+        ];
+    }
     public function add(Request $request, $productId)
 {
     $product = Product::findOrFail($productId);
@@ -19,9 +27,8 @@ class CartController extends Controller
     $totalCount = 0;
     
     if (auth()->check()) {
-        // -------------------------------------------------------
+
         // بخش اول: کاربر لاگین کرده است -> ذخیره در دیتابیس
-        // -------------------------------------------------------
         $cartItem = CartItem::where('user_id', auth()->id())
             ->where('product_id', $productId)
             ->where('color_id', $colorId)
@@ -43,9 +50,8 @@ class CartController extends Controller
         $totalCount = CartItem::where('user_id', auth()->id())->sum('quantity');
 
     } else {
-        // -------------------------------------------------------
+
         // بخش دوم: کاربر مهمان است -> ذخیره در سشن
-        // -------------------------------------------------------
         $colorName = null;
         
         // پیدا کردن نام واقعی رنگ برای سشن

@@ -11,9 +11,17 @@ use Illuminate\Http\Request;
 use App\Models\City;
 use App\Models\State;
 use Shetabit\Multipay\Request as MultipayRequest;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class HomeController extends Controller
 {
+    public static function middleware()
+    {
+        return[
+            new Middleware('permission:view home', only:['index']),
+        ];
+    }
     public function index()
     {
         $category = Category::first();

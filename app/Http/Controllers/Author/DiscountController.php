@@ -6,9 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\DiscountRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class DiscountController extends Controller
 {
+    public static function middleware(): array
+    {
+            return[
+                new Middleware('permission:manage own discounts', only:['create','store','destroy'])
+            ];
+    }
+
     public function create(Product $product)
     {
         if($product->user_id !== auth()->id()){

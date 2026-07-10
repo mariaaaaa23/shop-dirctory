@@ -6,9 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CouponRequest;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class CouponController extends Controller
 {
+
+  public static function middleware()
+    {
+        return[
+            new Middleware('permission:manage coupons', only:['index','create','store','edit','update']),
+        ];
+    }
 
     public function index()
     {

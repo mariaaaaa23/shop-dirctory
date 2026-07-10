@@ -6,9 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Picture;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 class ProductGalleryController extends Controller
 {
+    public static function middleware()
+    {
+        return[
+            new Middleware('permission:manage own productGalleries', only:['index','store','destroy'])
+        ];
+    }
     public function index(Product $product)
     {
         //چون نویسنده فقط باید محصولات خودش رو مدیریت کنه پس باید شرط بزاریم

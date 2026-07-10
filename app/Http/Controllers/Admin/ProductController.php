@@ -21,7 +21,7 @@ class ProductController extends Controller
     public static function middleware()
     {
         return[
-            new Middleware('permission:manage posts', only:['index','create','store','edit','update','destroy'])
+            new Middleware('permission:manage own posts', only:['create','store','edit','update','destroy'])
         ];
     }
     /**
